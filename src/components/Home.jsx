@@ -1,10 +1,12 @@
-import React from 'react'
-import { Button } from 'react-bootstrap'
+import React from "react";
+import { Button } from "react-bootstrap";
 
-export default function Home() {
-    return (
-        <>
-            <Button variant='primary'>Play</Button>
-        </>
-    )   
+export default function Home(props) {
+  return (
+    <>
+      <Button variant="primary" onClick={() => props.startQuiz()}>
+        Play
+      </Button>
+    </>
+  );
 }
