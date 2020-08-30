@@ -18,7 +18,7 @@ function Question(props) {
       </div>
 
       {/* question should go here  */}
-      <p className="mt-3">{props.getRandomQuestion()}</p>
+      <p className="mt-3">{props.question.question}</p>
 
       <div>
         <Button

@@ -9,17 +9,9 @@ import { Question } from "./components/Question";
 function App() {
   const [questionNumber, setQuestionNumber] = useState(0);
 
-  const continents = [
-    "Africa",
-    "Asia",
-    "Europe",
-    "South America",
-    "North America",
-    "Antarctica",
-    "Oceania",
-  ];
+  let [startButtonPressed, setStartButton] = useState(false);
 
-  const questions = [
+  let questions = [
     {
       id: 1,
       question: "Where is the Eiphels tower located?",
@@ -57,7 +49,25 @@ function App() {
     },
   ];
 
-  function getRandomQuestion() {}
+  let [selectedQuestions, setSelectedQuestions] = useState(questions);
+
+  useEffect(() => {
+    setSelectedQuestions = questions
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 5);
+  }, []);
+
+  const continents = [
+    "Africa",
+    "Asia",
+    "Europe",
+    "South America",
+    "North America",
+    "Antarctica",
+    "Oceania",
+  ];
+
+  // function getRandomQuestion() {}
 
   function renderScreen() {
     switch (questionNumber) {
@@ -66,8 +76,7 @@ function App() {
       case 1:
         return (
           <Question
-            getRandomQuestion={getRandomQuestion}
-            questions={questions}
+            question={selectedQuestions[0]}
             handleQuestion={handleQuestion}
             questionNumber={questionNumber}
           />
@@ -75,8 +84,7 @@ function App() {
       case 2:
         return (
           <Question
-            getRandomQuestion={getRandomQuestion}
-            questions={questions}
+            question={selectedQuestions[1]}
             handleQuestion={handleQuestion}
             questionNumber={questionNumber}
           />
@@ -84,8 +92,7 @@ function App() {
       case 3:
         return (
           <Question
-            getRandomQuestion={getRandomQuestion}
-            questions={questions}
+            question={selectedQuestions[2]}
             handleQuestion={handleQuestion}
             questionNumber={questionNumber}
           />
@@ -93,8 +100,7 @@ function App() {
       case 4:
         return (
           <Question
-            getRandomQuestion={getRandomQuestion}
-            questions={questions}
+            question={selectedQuestions[3]}
             handleQuestion={handleQuestion}
             questionNumber={questionNumber}
           />
@@ -102,8 +108,7 @@ function App() {
       case 5:
         return (
           <Question
-            getRandomQuestion={getRandomQuestion}
-            questions={questions}
+            question={selectedQuestions[4]}
             handleQuestion={handleQuestion}
             questionNumber={questionNumber}
           />
