@@ -9,7 +9,7 @@ import { Question } from "./components/Question";
 function App() {
   const [questionNumber, setQuestionNumber] = useState(0);
 
-  let [startButtonPressed, setStartButton] = useState(false);
+ 
 
   let questions = [
     {
@@ -76,7 +76,8 @@ function App() {
       case 1:
         return (
           <Question
-            question={selectedQuestions[0]}
+            continents={continents}
+            questionSelected={selectedQuestions[0]}
             handleQuestion={handleQuestion}
             questionNumber={questionNumber}
           />
@@ -84,7 +85,8 @@ function App() {
       case 2:
         return (
           <Question
-            question={selectedQuestions[1]}
+            continents={continents}
+            questionSelected={selectedQuestions[1]}
             handleQuestion={handleQuestion}
             questionNumber={questionNumber}
           />
@@ -92,7 +94,8 @@ function App() {
       case 3:
         return (
           <Question
-            question={selectedQuestions[2]}
+            continents={continents}
+            questionSelected={selectedQuestions[2]}
             handleQuestion={handleQuestion}
             questionNumber={questionNumber}
           />
@@ -100,7 +103,8 @@ function App() {
       case 4:
         return (
           <Question
-            question={selectedQuestions[3]}
+            continents={continents}
+            questionSelected={selectedQuestions[3]}
             handleQuestion={handleQuestion}
             questionNumber={questionNumber}
           />
@@ -108,7 +112,8 @@ function App() {
       case 5:
         return (
           <Question
-            question={selectedQuestions[4]}
+            continents={continents}
+            questionSelected={selectedQuestions[4]}
             handleQuestion={handleQuestion}
             questionNumber={questionNumber}
           />

@@ -1,8 +1,23 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
+import Answers from './Answers'
 
 function Question(props) {
+
+
+
+  let [randomAnswers, setAnswers] = useState(props.continents.filter(continent => continent !== props.questionSelected.correctAnswer).sort(() => 0.5 - Math.random())
+  .slice(0, 2))
+
+
+
+  useEffect(() => {
+      setAnswers = props.continents.filter(continent => continent !== props.questionSelected.correctAnswer).sort(() => 0.5 - Math.random())
+      .slice(0, 2)
+  },[randomAnswers]);
+
+
   return (
     <Col className="text-center">
       <div>
@@ -17,8 +32,12 @@ function Question(props) {
         />
       </div>
 
-      {/* question should go here  */}
-      <p className="mt-3">{props.question.question}</p>
+      <p className="mt-3">{props.questionSelected.question}</p>
+
+      <Answers correctAnswer={props.questionSelected.correctAnswer} answers={randomAnswers} />
+          
+      
+      
 
       <div>
         <Button
