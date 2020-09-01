@@ -13,9 +13,9 @@ function Question(props) {
 
 
   useEffect(() => {
-      setAnswers = props.continents.filter(continent => continent !== props.questionSelected.correctAnswer).sort(() => 0.5 - Math.random())
-      .slice(0, 2)
-  },[randomAnswers]);
+      setAnswers(props.continents.filter(continent => continent !== props.questionSelected.correctAnswer).sort(() => 0.5 - Math.random())
+      .slice(0, 2))
+  },[props.questionNumber]);
 
 
   return (
