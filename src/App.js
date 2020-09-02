@@ -49,12 +49,12 @@ function App() {
     },
   ];
 
-  let [selectedQuestions, setSelectedQuestions] = useState(questions);
+  const [selectedQuestions, setSelectedQuestions] = useState(questions);
 
   useEffect(() => {
-    setSelectedQuestions = questions
+    setSelectedQuestions(questions
       .sort(() => 0.5 - Math.random())
-      .slice(0, 5);
+      .slice(0, 5));
   }, []);
 
   const continents = [
@@ -132,7 +132,7 @@ function App() {
   }
 
   return (
-    <Container className="border border-primary p-5">
+    <Container className="p-5">
       <Row className="justify-content-center">
         <h3 className="mb-3">CONTINENT QUIZ</h3>
       </Row>

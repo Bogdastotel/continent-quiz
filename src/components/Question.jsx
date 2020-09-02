@@ -5,19 +5,6 @@ import Answers from './Answers'
 
 function Question(props) {
 
-
-
-  let [randomAnswers, setAnswers] = useState(props.continents.filter(continent => continent !== props.questionSelected.correctAnswer).sort(() => 0.5 - Math.random())
-  .slice(0, 2))
-
-
-
-  useEffect(() => {
-      setAnswers(props.continents.filter(continent => continent !== props.questionSelected.correctAnswer).sort(() => 0.5 - Math.random())
-      .slice(0, 2))
-  },[props.questionNumber]);
-
-
   return (
     <Col className="text-center">
       <div>
@@ -27,18 +14,15 @@ function Question(props) {
             imageCollection[Math.floor(Math.random() * imageCollection.length)]
           }
           alt="continent"
-          className="mt-3"
-          width="400"
+          className="mt-3 img-fluid border border-info"
+          
         />
       </div>
 
       <p className="mt-3">{props.questionSelected.question}</p>
 
-      <Answers correctAnswer={props.questionSelected.correctAnswer} answers={randomAnswers} />
+      <Answers correctAnswer={props.questionSelected.correctAnswer} continents={props.continents}   questionNumber={props.questionNumber} />
           
-      
-      
-
       <div>
         <Button
           variant="primary"
