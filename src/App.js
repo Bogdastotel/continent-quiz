@@ -9,8 +9,6 @@ import { Question } from "./components/Question";
 function App() {
   const [questionNumber, setQuestionNumber] = useState(0);
 
- 
-
   let questions = [
     {
       id: 1,
@@ -52,9 +50,7 @@ function App() {
   const [selectedQuestions, setSelectedQuestions] = useState(questions);
 
   useEffect(() => {
-    setSelectedQuestions(questions
-      .sort(() => 0.5 - Math.random())
-      .slice(0, 5));
+    setSelectedQuestions(questions.sort(() => 0.5 - Math.random()).slice(0, 5));
   }, []);
 
   const continents = [
@@ -125,6 +121,7 @@ function App() {
 
   function startQuiz() {
     setQuestionNumber(1);
+    setSelectedQuestions(questions.sort(() => 0.5 - Math.random()).slice(0, 5));
   }
 
   function handleQuestion() {
