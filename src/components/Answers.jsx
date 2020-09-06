@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import Col from "react-bootstrap/Col";
 import "../css/answer.css";
 
 export default function Answers(props) {
   const [randomAnswers, setAnswers] = useState([]);
+
+  const [buttonBgCollor, setButtonBgCollor] = useState("white");
 
   useEffect(() => {
     let randomAnswersExceptTheCorrectAnswer = props.continents
@@ -17,33 +20,33 @@ export default function Answers(props) {
     );
   }, [props.questionNumber]);
 
-  function checkAnswer(event) {
-    if (event === props.correctAnswer) console.log("correct");
+  function checkAnswer(e) {
+    if (e.target.value === props.correctAnswer) console.log("correct");
   }
 
   return (
-    <>
+    <Col>
       <button
         value={randomAnswers[0]}
-        onClick={(e) => checkAnswer(e.target.value)}
-        className="answer"
+        onClick={(e) => checkAnswer(e)}
+        className="answer d-block"
       >
         {randomAnswers[0]}
       </button>
       <button
         value={randomAnswers[1]}
-        onClick={(e) => checkAnswer(e.target.value)}
-        className="answer"
+        onClick={(e) => checkAnswer(e)}
+        className="answer d-block"
       >
         {randomAnswers[1]}
       </button>
       <button
         value={randomAnswers[2]}
-        onClick={(e) => checkAnswer(e.target.value)}
-        className="answer"
+        onClick={(e) => checkAnswer(e)}
+        className="answer d-block"
       >
         {randomAnswers[2]}
       </button>
-    </>
+    </Col>
   );
 }

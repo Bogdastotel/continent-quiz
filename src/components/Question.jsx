@@ -1,38 +1,45 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import Answers from './Answers'
+import Answers from "./Answers";
 
 function Question(props) {
-
   return (
-    <Col className="text-center">
-      <div>
-        <h4>Question: {props.questionNumber} of 5</h4>
-        <img
-          src={
-            imageCollection[Math.floor(Math.random() * imageCollection.length)]
-          }
-          alt="continent"
-          className="mt-3 img-fluid border border-info"
-          
+    <>
+      <Col className="text-center">
+        <div>
+          <h4>Question: {props.questionNumber} of 5</h4>
+          <img
+            src={
+              imageCollection[
+                Math.floor(Math.random() * imageCollection.length)
+              ]
+            }
+            alt="continent"
+            width="400"
+            className="mt-3  border border-info"
+          />
+        </div>
+
+        <p className="mt-3">{props.questionSelected.question}</p>
+
+        <Answers
+          correctAnswer={props.questionSelected.correctAnswer}
+          continents={props.continents}
+          questionNumber={props.questionNumber}
         />
-      </div>
 
-      <p className="mt-3">{props.questionSelected.question}</p>
-
-      <Answers correctAnswer={props.questionSelected.correctAnswer} continents={props.continents}   questionNumber={props.questionNumber} />
-          
-      <div>
-        <Button
-          variant="primary"
-          className="mt-3"
-          onClick={() => props.handleQuestion()}
-        >
-          Next
-        </Button>
-      </div>
-    </Col>
+        <div>
+          <Button
+            variant="primary"
+            className="mt-3"
+            onClick={() => props.handleQuestion()}
+          >
+            Next
+          </Button>
+        </div>
+      </Col>
+    </>
   );
 }
 
