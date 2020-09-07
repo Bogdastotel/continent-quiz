@@ -5,7 +5,21 @@ import "../css/answer.css";
 export default function Answers(props) {
   const [randomAnswers, setAnswers] = useState([]);
 
-  const [buttonBgCollor, setButtonBgCollor] = useState("white");
+  const [isCorrectAnswer, setCorrectAnswer] = useState({
+    answerOne: false,
+    answerTwo: false,
+    answerThree: false
+  }
+)
+
+
+  useEffect(() => {
+    setCorrectAnswer({    
+      answerOne: false,
+      answerTwo: false,
+      answerThree: false})
+    
+  }, [props.questionNumber])
 
   useEffect(() => {
     let randomAnswersExceptTheCorrectAnswer = props.continents
@@ -21,29 +35,32 @@ export default function Answers(props) {
   }, [props.questionNumber]);
 
   function checkAnswer(e) {
-    if (e.target.value === props.correctAnswer) console.log("correct");
+    if (e.target.value === props.correctAnswer) setCorrectAnswer({...isCorrectAnswer, [e.target.name]: true});
   }
 
   return (
     <Col>
       <button
+        name={'answerOne'}
         value={randomAnswers[0]}
         onClick={(e) => checkAnswer(e)}
-        className="answer d-block"
+        className={isCorrectAnswer.answerOne ? 'correctAnswer' : 'answer'}
       >
         {randomAnswers[0]}
       </button>
       <button
+        name={'answerTwo'}
         value={randomAnswers[1]}
         onClick={(e) => checkAnswer(e)}
-        className="answer d-block"
+        className={isCorrectAnswer.answerTwo ? 'correctAnswer' : 'answer'}
       >
         {randomAnswers[1]}
       </button>
       <button
+        name={'answerThree'}
         value={randomAnswers[2]}
         onClick={(e) => checkAnswer(e)}
-        className="answer d-block"
+        className={isCorrectAnswer.answerThree ? 'correctAnswer' : 'answer'}
       >
         {randomAnswers[2]}
       </button>
