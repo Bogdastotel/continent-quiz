@@ -8,18 +8,16 @@ export default function Answers(props) {
   const [isCorrectAnswer, setCorrectAnswer] = useState({
     answerOne: false,
     answerTwo: false,
-    answerThree: false
-  }
-)
-
+    answerThree: false,
+  });
 
   useEffect(() => {
-    setCorrectAnswer({    
+    setCorrectAnswer({
       answerOne: false,
       answerTwo: false,
-      answerThree: false})
-    
-  }, [props.questionNumber])
+      answerThree: false,
+    });
+  }, [props.questionNumber]);
 
   useEffect(() => {
     let randomAnswersExceptTheCorrectAnswer = props.continents
@@ -35,35 +33,51 @@ export default function Answers(props) {
   }, [props.questionNumber]);
 
   function checkAnswer(e) {
-    if (e.target.value === props.correctAnswer) setCorrectAnswer({...isCorrectAnswer, [e.target.name]: true});
+    if (e.target.value === props.correctAnswer)
+      setCorrectAnswer({ ...isCorrectAnswer, [e.target.name]: true });
+    else {
+      answers.map((answer) => {
+        if (answer.props.value === props.correctAnswer) {
+          setCorrectAnswer({ ...isCorrectAnswer, [answer.props.name]: true });
+        }
+        e.target.style.backgroundColor = "red";
+        // console.log(answer.props.value);
+      });
+    }
   }
+
+  let answers = [
+    <button
+      name={"answerOne"}
+      value={randomAnswers[0]}
+      onClick={(e) => checkAnswer(e)}
+      className={isCorrectAnswer.answerOne ? "correctAnswer" : "answer"}
+    >
+      {randomAnswers[0]}
+    </button>,
+    <button
+      name={"answerTwo"}
+      value={randomAnswers[1]}
+      onClick={(e) => checkAnswer(e)}
+      className={isCorrectAnswer.answerTwo ? "correctAnswer" : "answer"}
+    >
+      {randomAnswers[1]}
+    </button>,
+    <button
+      name={"answerThree"}
+      value={randomAnswers[2]}
+      onClick={(e) => checkAnswer(e)}
+      className={isCorrectAnswer.answerThree ? "correctAnswer" : "answer"}
+    >
+      {randomAnswers[2]}
+    </button>,
+  ];
 
   return (
     <Col>
-      <button
-        name={'answerOne'}
-        value={randomAnswers[0]}
-        onClick={(e) => checkAnswer(e)}
-        className={isCorrectAnswer.answerOne ? 'correctAnswer' : 'answer'}
-      >
-        {randomAnswers[0]}
-      </button>
-      <button
-        name={'answerTwo'}
-        value={randomAnswers[1]}
-        onClick={(e) => checkAnswer(e)}
-        className={isCorrectAnswer.answerTwo ? 'correctAnswer' : 'answer'}
-      >
-        {randomAnswers[1]}
-      </button>
-      <button
-        name={'answerThree'}
-        value={randomAnswers[2]}
-        onClick={(e) => checkAnswer(e)}
-        className={isCorrectAnswer.answerThree ? 'correctAnswer' : 'answer'}
-      >
-        {randomAnswers[2]}
-      </button>
+      {answers[0]}
+      {answers[1]}
+      {answers[2]}
     </Col>
   );
 }
