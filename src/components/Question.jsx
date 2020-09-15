@@ -4,6 +4,18 @@ import Col from "react-bootstrap/Col";
 import Answers from "./Answers";
 
 function Question(props) {
+
+  const [correctAnswerGiven, setCorrectAnswer] = useState(false)
+
+
+  useEffect(() => {
+    setCorrectAnswer(false)
+  }, [props.questionNumber])
+
+  function handleAnswer() {
+    setCorrectAnswer(true)
+  }
+ 
   return (
     <>
       <Col className="text-center">
@@ -27,13 +39,14 @@ function Question(props) {
           correctAnswer={props.questionSelected.correctAnswer}
           continents={props.continents}
           questionNumber={props.questionNumber}
+          handleAnswer={handleAnswer}
         />
 
         <div>
           <Button
             variant="primary"
             className="mt-3"
-            onClick={() => props.handleQuestion()}
+            onClick={() => props.handleQuestion(correctAnswerGiven)}
           >
             Next
           </Button>

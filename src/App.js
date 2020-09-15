@@ -9,6 +9,8 @@ import { Question } from "./components/Question";
 function App() {
   const [questionNumber, setQuestionNumber] = useState(0);
 
+  const [points, setPoints] = useState(0)
+
   let questions = [
     {
       id: 1,
@@ -122,10 +124,13 @@ function App() {
   function startQuiz() {
     setQuestionNumber(1);
     setSelectedQuestions(questions.sort(() => 0.5 - Math.random()).slice(0, 5));
+    setPoints(0)
   }
 
-  function handleQuestion() {
+  function handleQuestion(correctGivenAnswer) {
     setQuestionNumber(questionNumber + 1);
+    if(correctGivenAnswer) setPoints(points + 750)
+
   }
 
   return (
