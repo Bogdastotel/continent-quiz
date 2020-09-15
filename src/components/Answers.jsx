@@ -12,12 +12,24 @@ export default function Answers(props) {
   }
 )
 
+  const [disabledButtons, setDisabledButtons] = useState({
+     answerOne: false,
+     answerTwo: false,
+     answerThree: false
+  })
+
 
   useEffect(() => {
     setCorrectAnswer({    
       answerOne: false,
       answerTwo: false,
       answerThree: false})
+
+      setDisabledButtons ({
+        answerOne: false,
+        answerTwo: false,
+        answerThree: false
+      })
     
   }, [props.questionNumber])
 
@@ -35,13 +47,34 @@ export default function Answers(props) {
   }, [props.questionNumber]);
 
   function checkAnswer(e) {
-    if (e.target.value === props.correctAnswer) setCorrectAnswer({...isCorrectAnswer, [e.target.name]: true});
+    if (e.target.value === props.correctAnswer) {
+       
+    setCorrectAnswer({...isCorrectAnswer, [e.target.name]: true});
+    setDisabledButtons({
+      answerOne: true,
+      answerTwo: true,
+      answerThree: true,
+      [e.target.name]: false
+    })
+
+    } else {
+      e.target.style.backgroundColor = 'red'
+      setDisabledButtons({
+        answerOne: true,
+        answerTwo: true,
+        answerThree: true,
+        [e.target.name]: false
+      })
+    }
+    
+   
   }
 
   return (
     <Col>
       <button
         name={'answerOne'}
+        disabled={disabledButtons.answerOne}
         value={randomAnswers[0]}
         onClick={(e) => checkAnswer(e)}
         className={isCorrectAnswer.answerOne ? 'correctAnswer' : 'answer'}
@@ -50,6 +83,7 @@ export default function Answers(props) {
       </button>
       <button
         name={'answerTwo'}
+        disabled={disabledButtons.answerTwo}
         value={randomAnswers[1]}
         onClick={(e) => checkAnswer(e)}
         className={isCorrectAnswer.answerTwo ? 'correctAnswer' : 'answer'}
@@ -58,6 +92,7 @@ export default function Answers(props) {
       </button>
       <button
         name={'answerThree'}
+        disabled={disabledButtons.answerThree}
         value={randomAnswers[2]}
         onClick={(e) => checkAnswer(e)}
         className={isCorrectAnswer.answerThree ? 'correctAnswer' : 'answer'}
