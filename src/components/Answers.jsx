@@ -11,6 +11,21 @@ export default function Answers(props) {
     answerThree: false,
   });
 
+
+  const [wrongAnswers, setWrongAnswers] = useState({
+    answerOne: false,
+    answerTwo: false,
+    answerThree: false,
+  })
+
+  useEffect(() => {
+    setWrongAnswers({
+      answerOne: false,
+      answerTwo: false,
+      answerThree: false,
+    })
+  }, [props.questionNumber])
+
   useEffect(() => {
     setCorrectAnswer({
       answerOne: false,
@@ -40,7 +55,10 @@ export default function Answers(props) {
         if (answer.props.value === props.correctAnswer) {
           setCorrectAnswer({ ...isCorrectAnswer, [answer.props.name]: true });
         }
-        e.target.style.backgroundColor = "red";
+        setWrongAnswers({
+          ...wrongAnswers, [e.target.name]: true
+        })
+        // e.target.style.backgroundColor = "red";
         // console.log(answer.props.value);
       });
     }
@@ -52,7 +70,7 @@ export default function Answers(props) {
       name={"answerOne"}
       value={randomAnswers[0]}
       onClick={(e) => checkAnswer(e)}
-      className={isCorrectAnswer.answerOne ? "correctAnswer" : "answer"}
+      className={isCorrectAnswer.answerOne ? "correctAnswer" : wrongAnswers.answerOne ? "wrongAnswer" : "answer"}
     >
       {randomAnswers[0]}
     </button>,
@@ -60,7 +78,7 @@ export default function Answers(props) {
       name={"answerTwo"}
       value={randomAnswers[1]}
       onClick={(e) => checkAnswer(e)}
-      className={isCorrectAnswer.answerTwo ? "correctAnswer" : "answer"}
+      className={isCorrectAnswer.answerTwo ? "correctAnswer" : wrongAnswers.answerTwo ? "wrongAnswer" : "answer"}
     >
       {randomAnswers[1]}
     </button>,
@@ -68,7 +86,7 @@ export default function Answers(props) {
       name={"answerThree"}
       value={randomAnswers[2]}
       onClick={(e) => checkAnswer(e)}
-      className={isCorrectAnswer.answerThree ? "correctAnswer" : "answer"}
+      className={isCorrectAnswer.answerThree ? "correctAnswer" : wrongAnswers.answerThree ? "wrongAnswer" : "answer"}
     >
       {randomAnswers[2]}
     </button>,

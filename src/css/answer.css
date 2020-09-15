@@ -21,3 +21,14 @@
     cursor: pointer;
     background-color: #0275d8;
 }
+
+.wrongAnswer {
+    display: block;
+    border: 2px solid black;
+    width: 200px;
+    padding: 10px 20px;
+    margin: 10px auto;
+    cursor: pointer;
+    background-color: red;
+}
+
