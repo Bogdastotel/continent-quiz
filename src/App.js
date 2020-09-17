@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import FinalScore from './components/FinalScore'
 import { Question } from "./components/Question";
 
 function App() {
@@ -116,6 +117,10 @@ function App() {
             questionNumber={questionNumber}
           />
         );
+      case 6: 
+        return (
+          <FinalScore points={points} startQuiz={startQuiz} />
+        )
       default:
         return <Home startQuiz={startQuiz} />;
     }
