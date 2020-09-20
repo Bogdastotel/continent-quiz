@@ -40,7 +40,7 @@ export default function Answers(props) {
         if (answer.props.value === props.correctAnswer) {
           setCorrectAnswer({ ...isCorrectAnswer, [answer.props.name]: true });
         }
-        e.target.style.backgroundColor = "red";
+        e.target.style.className = "red";
         // console.log(answer.props.value);
       });
     }
