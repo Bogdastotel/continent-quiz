@@ -4,15 +4,34 @@ import "../css/answer.css";
 
 export default function Answers(props) {
   const [randomAnswers, setAnswers] = useState([]);
+  const [answerGiven, setAnswerGiven] = useState(false);
 
-  const [isCorrectAnswer, setCorrectAnswer] = useState({
+  const [correctAnswers, setCorrectAnswer] = useState({
+    answerOne: false,
+    answerTwo: false,
+    answerThree: false,
+  });
+
+  const [wrongAnswers, setWrongAnswers] = useState({
     answerOne: false,
     answerTwo: false,
     answerThree: false,
   });
 
   useEffect(() => {
+    setAnswerGiven(false);
+  }, [props.questionNumber]);
+
+  useEffect(() => {
     setCorrectAnswer({
+      answerOne: false,
+      answerTwo: false,
+      answerThree: false,
+    });
+  }, [props.questionNumber]);
+
+  useEffect(() => {
+    setWrongAnswers({
       answerOne: false,
       answerTwo: false,
       answerThree: false,
@@ -33,16 +52,23 @@ export default function Answers(props) {
   }, [props.questionNumber]);
 
   function checkAnswer(e) {
-    if (e.target.value === props.correctAnswer)
-      setCorrectAnswer({ ...isCorrectAnswer, [e.target.name]: true });
-    else {
-      answers.map((answer) => {
-        if (answer.props.value === props.correctAnswer) {
-          setCorrectAnswer({ ...isCorrectAnswer, [answer.props.name]: true });
-        }
-        e.target.style.className = "red";
-        // console.log(answer.props.value);
-      });
+    setAnswerGiven(true);
+
+    if (!answerGiven) {
+      if (e.target.value === props.correctAnswer) {
+        setCorrectAnswer({ ...correctAnswers, [e.target.name]: true });
+        props.handleAnswer();
+      } else {
+        answers.map((answer) => {
+          if (answer.props.value === props.correctAnswer) {
+            setCorrectAnswer({ ...correctAnswers, [answer.props.name]: true });
+          }
+          setWrongAnswers({
+            ...wrongAnswers,
+            [e.target.name]: true,
+          });
+        });
+      }
     }
   }
 
@@ -51,7 +77,13 @@ export default function Answers(props) {
       name={"answerOne"}
       value={randomAnswers[0]}
       onClick={(e) => checkAnswer(e)}
-      className={isCorrectAnswer.answerOne ? "correctAnswer" : "answer"}
+      className={
+        correctAnswers.answerOne
+          ? "correctAnswer"
+          : wrongAnswers.answerOne
+          ? "wrongAnswer"
+          : "answer"
+      }
     >
       {randomAnswers[0]}
     </button>,
@@ -59,7 +91,13 @@ export default function Answers(props) {
       name={"answerTwo"}
       value={randomAnswers[1]}
       onClick={(e) => checkAnswer(e)}
-      className={isCorrectAnswer.answerTwo ? "correctAnswer" : "answer"}
+      className={
+        correctAnswers.answerTwo
+          ? "correctAnswer"
+          : wrongAnswers.answerTwo
+          ? "wrongAnswer"
+          : "answer"
+      }
     >
       {randomAnswers[1]}
     </button>,
@@ -67,7 +105,13 @@ export default function Answers(props) {
       name={"answerThree"}
       value={randomAnswers[2]}
       onClick={(e) => checkAnswer(e)}
-      className={isCorrectAnswer.answerThree ? "correctAnswer" : "answer"}
+      className={
+        correctAnswers.answerThree
+          ? "correctAnswer"
+          : wrongAnswers.answerThree
+          ? "wrongAnswer"
+          : "answer"
+      }
     >
       {randomAnswers[2]}
     </button>,

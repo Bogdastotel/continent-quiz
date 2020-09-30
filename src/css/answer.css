@@ -22,7 +22,9 @@
     background-color: #0275d8;
 }
 
-.red {
+
+.wrongAnswer {
+
     display: block;
     border: 2px solid black;
     width: 200px;

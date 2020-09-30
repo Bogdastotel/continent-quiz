@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import Home from "./components/Home";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import FinalScore from "./components/FinalScore";
 import { Question } from "./components/Question";
 
 function App() {
   const [questionNumber, setQuestionNumber] = useState(0);
+
+  const [points, setPoints] = useState(0);
 
   let questions = [
     {
@@ -48,10 +51,24 @@ function App() {
   ];
 
   const [selectedQuestions, setSelectedQuestions] = useState(questions);
+  const [scores, setScores] = useState([0]);
 
   useEffect(() => {
-    setSelectedQuestions(questions.sort(() => 0.5 - Math.random()).slice(0, 5));
-  }, []);
+    // setSelectedQuestions(questions.sort(() => 0.5 - Math.random()).slice(0, 5));
+    // if (JSON.parse(localStorage.getItem("scores") === null)) {
+    //   localStorage.setItem("scores", JSON.stringify([]));
+    // }
+    if (scores.length > 3) {
+      let sortedScores = scores.sort(function (a, b) {
+        return b - a;
+      });
+
+      localStorage.setItem(
+        "scores",
+        JSON.stringify([sortedScores[0], sortedScores[1], sortedScores[2]])
+      );
+    }
+  }, [scores]);
 
   const continents = [
     "Africa",
@@ -64,6 +81,50 @@ function App() {
   ];
 
   // function getRandomQuestion() {}
+
+  const prevScoresRef = useRef();
+  prevScoresRef.current = scores;
+  const prevScores = prevScoresRef.current;
+
+  function updateScores(score) {
+    setScores([...prevScores, score]);
+
+    // if latest score is bigger from any of the previous scores stored in the local storage => =>
+    if (JSON.parse(localStorage.getItem("scores") !== null)) {
+      let previousLocalScores = JSON.parse(localStorage.getItem("scores"));
+      if (
+        score > previousLocalScores[0] ||
+        score > previousLocalScores[1] ||
+        previousLocalScores[2]
+      ) {
+        let newScoresUnsorted = [...previousLocalScores, score];
+        let newScoresSorted = newScoresUnsorted.sort(function (a, b) {
+          return b - a;
+        });
+
+        localStorage.setItem(
+          "scores",
+          JSON.stringify([
+            newScoresSorted[0],
+            newScoresSorted[1],
+            newScoresSorted[2],
+          ])
+        );
+      }
+    }
+  }
+
+  function startQuiz() {
+    setQuestionNumber(1);
+    setSelectedQuestions(questions.sort(() => 0.5 - Math.random()).slice(0, 5));
+
+    setPoints(0);
+  }
+
+  function handleQuestion(correctGivenAnswer) {
+    setQuestionNumber(questionNumber + 1);
+    if (correctGivenAnswer) setPoints(points + 750);
+  }
 
   function renderScreen() {
     switch (questionNumber) {
@@ -114,18 +175,17 @@ function App() {
             questionNumber={questionNumber}
           />
         );
+      case 6:
+        return (
+          <FinalScore
+            points={points}
+            startQuiz={startQuiz}
+            updateScores={updateScores}
+          />
+        );
       default:
         return <Home startQuiz={startQuiz} />;
     }
-  }
-
-  function startQuiz() {
-    setQuestionNumber(1);
-    setSelectedQuestions(questions.sort(() => 0.5 - Math.random()).slice(0, 5));
-  }
-
-  function handleQuestion() {
-    setQuestionNumber(questionNumber + 1);
   }
 
   return (
